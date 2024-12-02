@@ -1,0 +1,26 @@
+<resources>
+    <string name="app_name">Potato</string>
+    <string name="home">Inicio</string>
+    <string name="characters">Personajes</string>
+    <!-- Botones de diálogo de permisos -->
+    <string name="allow">Permitir</string>
+    <string name="not_now">Ahora no</string>
+
+    <!-- Permisos de almacenamiento -->
+    <string name="storage_permission_title">Acceso a imágenes</string>
+    <string name="storage_permission_description">Para agregar una imagen de portada, necesitamos acceder a tu galería. ¿Nos permites acceder a tus imágenes?</string>
+
+    <!-- Permisos de cámara -->
+    <string name="camera_permission_title">Acceso a la cámara</string>
+    <string name="camera_permission_description">Para tomar fotos, necesitamos acceder a tu cámara. ¿Nos permites usar la cámara?</string>
+
+    <!-- Permisos de ubicación -->
+    <string name="location_permission_title">Acceso a la ubicación</string>
+    <string name="location_permission_description">Para mejorar tu experiencia, necesitamos acceder a tu ubicación. ¿Nos permites acceder a tu ubicación?</string>
+    <string name="settings">Configuración</string>
+    <string name="settings_title">Configuración</string>
+    <string name="light_theme">Claro</string>
+    <string name="dark_theme">Oscuro</string>
+    <string name="system_theme">Sistema</string>
+    <string name="theme_settings">Tema</string>
+</resources>
