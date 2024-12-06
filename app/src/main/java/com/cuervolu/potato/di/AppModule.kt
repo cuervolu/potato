@@ -6,6 +6,7 @@ import com.cuervolu.potato.data.preferences.UserPreferencesManager
 import com.cuervolu.potato.data.repository.CharacterRepository
 import com.cuervolu.potato.data.repository.NoteRepository
 import com.cuervolu.potato.ui.screens.characters.CharactersViewModel
+import com.cuervolu.potato.ui.screens.home.EasterEggViewModel
 import com.cuervolu.potato.ui.screens.home.HomeViewModel
 import com.cuervolu.potato.ui.screens.notes.NoteEditorViewModel
 import com.cuervolu.potato.ui.screens.settings.SettingsViewModel
@@ -44,4 +45,5 @@ val appModule = module {
     viewModel { CharactersViewModel(get()) }
     viewModel { NoteEditorViewModel(get(), get()) }
     viewModel { SettingsViewModel(get()) }
+    viewModel{ EasterEggViewModel() }
 }

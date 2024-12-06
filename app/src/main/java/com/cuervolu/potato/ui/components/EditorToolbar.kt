@@ -47,20 +47,18 @@ fun AnimatedEditorToolbar(
         label = "toolbar"
     )
 
-    val offsetY by transition.animateDp(
-        label = "offsetY",
-    ) { isVisible ->
-        if (isVisible) 0.dp else 48.dp
+    val offsetY by transition.animateDp(label = "offsetY") { isVisible ->
+        if (isVisible) 0.dp else 100.dp
     }
 
     Box(
         modifier = modifier
             .offset(y = offsetY)
             .graphicsLayer(
-                alpha = if (visible && keyboardVisible) 1f else 0f,
+                alpha = if (visible) 1f else 0f,
                 clip = true,
-                scaleX = if (visible && keyboardVisible) 1f else 0.9f,
-                scaleY = if (visible && keyboardVisible) 1f else 0.9f
+                scaleX = if (visible) 1f else 0.9f,
+                scaleY = if (visible) 1f else 0.9f
             )
     ) {
         EditorToolbar(
