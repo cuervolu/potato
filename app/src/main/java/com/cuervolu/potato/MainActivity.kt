@@ -62,6 +62,7 @@ class MainActivity : ComponentActivity() {
         }
     }
 }
+
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun PotatoApp() {
@@ -75,19 +76,21 @@ fun PotatoApp() {
                 if (!isNoteEditor) {
                     when (currentRoute) {
                         Screen.Home.route -> CustomTopAppBar(
-                            title =  stringResource(R.string.home),
+                            title = stringResource(R.string.home),
                             showMenuIcon = true,
                             openDrawer = openDrawer,
                             containerColor = MaterialTheme.colorScheme.surface,
                             contentColor = MaterialTheme.colorScheme.onSurface
                         )
+
                         Screen.Characters.route -> CustomTopAppBar(
-                            title =  stringResource(R.string.characters),
+                            title = stringResource(R.string.characters),
                             showMenuIcon = true,
                             openDrawer = openDrawer,
                             containerColor = MaterialTheme.colorScheme.surface,
                             contentColor = MaterialTheme.colorScheme.onSurface
                         )
+
                         Screen.Settings.route -> CustomTopAppBar(
                             title = stringResource(R.string.settings),
                             showMenuIcon = true,
@@ -108,12 +111,8 @@ fun PotatoApp() {
             ) {
                 composable(Screen.Home.route) {
                     HomeScreen(
-                        onNoteClick = { noteId ->
-                            navController.navigate("note_editor/$noteId")
-                        },
-                        onNewNoteClick = {
-                            navController.navigate("note_editor/-1")
-                        },
+                        onNoteClick = { noteId -> navController.navigate("note_editor/$noteId") },
+                        onNewNoteClick = { navController.navigate("note_editor/-1") }
                     )
                 }
                 composable(Screen.Characters.route) {
@@ -132,9 +131,10 @@ fun PotatoApp() {
                     val noteId = backStackEntry.arguments?.getInt("noteId") ?: -1
                     NoteEditorScreen(
                         noteId = if (noteId != -1) noteId else null,
-                        onBackClick = { navController.navigateUp() },
+                        onBackClick = { navController.navigateUp() }
                     )
                 }
+
             }
         }
     }

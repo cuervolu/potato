@@ -5,6 +5,7 @@ import android.net.Uri
 import android.provider.Settings
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -49,6 +50,7 @@ import com.cuervolu.potato.utils.state.UIState
 import com.mohamedrejeb.richeditor.model.rememberRichTextState
 import com.mohamedrejeb.richeditor.ui.material3.RichTextEditor
 import com.mohamedrejeb.richeditor.ui.material3.RichTextEditorDefaults
+import com.skydoves.orbital.Orbital
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -197,53 +199,55 @@ fun NoteEditorScreen(
             .fillMaxSize()
             .systemBarsPadding()
     ) {
-        LazyColumn(
-            state = scrollState,
-            modifier = Modifier
-                .fillMaxSize()
-                .imePadding()
-                .navigationBarsPadding(),
-            verticalArrangement = Arrangement.spacedBy(16.dp)
-        ) {
-            item {
-                NoteCoverHeader(
-                    title = localTitle,
-                    coverImage = currentNote?.coverImage,
-                    scrollOffset = scrollOffset,
-                    onBackClick = onBackClick,
-                    onTitleChange = { newTitle ->
-                        localTitle = newTitle
-                    },
-                    onImageClick = { imagePicker.pickImage() },
-                    isLoading = uiState is UIState.Loading
-                )
-            }
-
-            item {
-                RichTextEditor(
-                    state = richTextState,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .defaultMinSize(minHeight = 200.dp)
-                        .padding(horizontal = 16.dp)
-                        .padding(bottom = 80.dp)
-                        .onFocusChanged { focusState ->
-                            toolbarVisible.value = focusState.isFocused
+        Orbital {
+            LazyColumn(
+                state = scrollState,
+                modifier = Modifier
+                    .fillMaxSize()
+                    .imePadding()
+                    .navigationBarsPadding(),
+                verticalArrangement = Arrangement.spacedBy(16.dp)
+            ) {
+                item {
+                    NoteCoverHeader(
+                        title = localTitle,
+                        coverImage = currentNote?.coverImage,
+                        scrollOffset = scrollOffset,
+                        onBackClick = onBackClick,
+                        onTitleChange = { newTitle ->
+                            localTitle = newTitle
                         },
-                    placeholder = {
-                        Text(
-                            text = "Escribe aquí tu nota...",
-                            color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f)
-                        )
-                    },
-                    colors = RichTextEditorDefaults.richTextEditorColors(
-                        textColor = MaterialTheme.colorScheme.onSurface,
-                        containerColor = Color.Transparent,
-                        focusedIndicatorColor = Color.Transparent,
-                        unfocusedIndicatorColor = Color.Transparent,
-                        cursorColor = MaterialTheme.colorScheme.primary
+                        onImageClick = { imagePicker.pickImage() },
+                        isLoading = uiState is UIState.Loading
                     )
-                )
+                }
+
+                item {
+                    RichTextEditor(
+                        state = richTextState,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .defaultMinSize(minHeight = 200.dp)
+                            .padding(horizontal = 16.dp)
+                            .padding(bottom = 80.dp)
+                            .onFocusChanged { focusState ->
+                                toolbarVisible.value = focusState.isFocused
+                            },
+                        placeholder = {
+                            Text(
+                                text = "Escribe aquí tu nota...",
+                                color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f)
+                            )
+                        },
+                        colors = RichTextEditorDefaults.richTextEditorColors(
+                            textColor = MaterialTheme.colorScheme.onSurface,
+                            containerColor = Color.Transparent,
+                            focusedIndicatorColor = Color.Transparent,
+                            unfocusedIndicatorColor = Color.Transparent,
+                            cursorColor = MaterialTheme.colorScheme.primary
+                        )
+                    )
+                }
             }
         }
 

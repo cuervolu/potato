@@ -1,5 +1,6 @@
 package com.cuervolu.potato.ui.components
 
+import androidx.compose.animation.core.SpringSpec
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -18,13 +19,16 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.cuervolu.potato.data.local.entity.NoteEntity
 import com.cuervolu.potato.utils.NoteUtils
+import com.skydoves.orbital.OrbitalScope
+import com.skydoves.orbital.animateSharedElementTransition
 
 @Composable
 fun NoteItem(
     note: NoteEntity,
     onNoteClick: () -> Unit,
     onNotePinned: () -> Unit,
-    onNoteArchived: () -> Unit
+    onNoteArchived: () -> Unit,
+    orbitalScope: OrbitalScope? = null
 ) {
     val processedContent = remember(note.content) {
         NoteUtils.stripHtmlAndTruncate(note.content)
@@ -33,7 +37,16 @@ fun NoteItem(
         onClick = onNoteClick,
         modifier = Modifier
             .width(160.dp)
-            .padding(horizontal = 8.dp, vertical = 8.dp),
+            .padding(horizontal = 8.dp, vertical = 8.dp)
+            .then(
+                if (orbitalScope != null) {
+                    Modifier.animateSharedElementTransition(
+                        orbitalScope,
+                        SpringSpec(stiffness = 300f),
+                        SpringSpec(stiffness = 300f)
+                    )
+                } else Modifier
+            ),
         shape = RoundedCornerShape(12.dp),
         elevation = CardDefaults.cardElevation(
             defaultElevation = 6.dp,

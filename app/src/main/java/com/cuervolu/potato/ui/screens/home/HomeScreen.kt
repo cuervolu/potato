@@ -11,6 +11,7 @@ import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
@@ -30,7 +31,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -41,6 +41,8 @@ import androidx.compose.ui.unit.dp
 import com.cuervolu.potato.R
 import com.cuervolu.potato.ui.components.NoteItem
 import com.cuervolu.potato.ui.components.SoundEffect
+import com.skydoves.orbital.Orbital
+import com.skydoves.orbital.rememberContentWithOrbitalScope
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
@@ -51,24 +53,11 @@ fun HomeScreen(
 ) {
     val notes by viewModel.notes.collectAsState()
 
-    Scaffold(
-        floatingActionButton = {
-            FloatingActionButton(
-                onClick = onNewNoteClick,
-                containerColor = MaterialTheme.colorScheme.primaryContainer,
-                contentColor = MaterialTheme.colorScheme.onPrimaryContainer
-            ) {
-                Icon(Icons.Default.Add, contentDescription = "Add note")
-            }
-        },
-        containerColor = MaterialTheme.colorScheme.background
-    ) { innerPadding ->
-        if (notes.isEmpty()) {
-            EmptyNotesWithEasterEgg()
-        } else {
+    Orbital {
+        val noteItems = rememberContentWithOrbitalScope {
             LazyVerticalGrid(
                 columns = GridCells.Fixed(2),
-                contentPadding = innerPadding,
+                contentPadding = PaddingValues(10.dp),
                 modifier = Modifier.fillMaxSize(),
                 horizontalArrangement = Arrangement.spacedBy(10.dp),
                 verticalArrangement = Arrangement.spacedBy(10.dp)
@@ -83,9 +72,29 @@ fun HomeScreen(
                 }
             }
         }
+
+        Scaffold(
+            floatingActionButton = {
+                FloatingActionButton(
+                    onClick = onNewNoteClick,
+                    containerColor = MaterialTheme.colorScheme.primaryContainer,
+                    contentColor = MaterialTheme.colorScheme.onPrimaryContainer
+                ) {
+                    Icon(Icons.Default.Add, contentDescription = "Add note")
+                }
+            },
+            containerColor = MaterialTheme.colorScheme.background
+        ) { paddingValues ->
+            Box(modifier = Modifier.padding(paddingValues)) {
+                if (notes.isEmpty()) {
+                    EmptyNotesWithEasterEgg()
+                } else {
+                    noteItems()
+                }
+            }
+        }
     }
 }
-
 
 @Composable
 fun EmptyNotesWithEasterEgg(

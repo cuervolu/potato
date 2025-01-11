@@ -65,6 +65,9 @@ dependencies {
     implementation(libs.kotlin.logging.jvm)
     implementation(libs.slf4j.simple)
 
+    //Orbital
+    implementation(libs.orbital)
+
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
